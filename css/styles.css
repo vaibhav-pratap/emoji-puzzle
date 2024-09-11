@@ -51,11 +51,14 @@ body {
 
 .score-display {
     margin-top: 40px;
+    display: flex; /* Display score and icon inline */
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Center horizontally */
+    gap: 10px; /* Add gap between icon and score */
 }
 
 .score-display i {
-    font-size: 30px;
-    margin-left: 10px;
+    font-size: 24px; /* Adjust icon size */
 }
 
 /* Game Container */

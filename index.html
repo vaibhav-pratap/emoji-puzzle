@@ -15,13 +15,16 @@
     <div id="floatingBar" class="floating-bar bg-primary">
         <!-- Score and Status Display in the center -->
         <div class="score-display text-center">
-            <h4 class="text-light">Score: <span id="score">0</span></h4>
-            <i class="fas fa-star text-warning"></i>
+            <h4 class="text-light">
+                <i class="fas fa-trophy text-warning"></i> <!-- Trophy icon -->
+                <h4>Score:</h4><h3><span id="score">0</span></h3> <!-- Score -->
+            </h4>
             <h5 class="text-light mt-3" id="winStatus"></h5> <!-- Win status -->
         </div>
 
         <!-- Buttons aligned at the bottom -->
         <div class="difficulty-buttons mt-auto">
+            <h4>Select Level:</h4>
             <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(4)">4x4 - Easy</button>
             <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(6)">6x6 - Medium</button>
             <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(8)">8x8 - Hard</button>

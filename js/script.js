@@ -22,6 +22,11 @@ let matchedTiles = 0; // Track the number of matched tiles
 let totalTiles = 0; // Total number of tiles for the current game
 let isClickable = true; // Control to prevent multiple clicks during tile flipping
 
+// Start the game with 4x4 grid visible by default
+window.onload = function() {
+    startGame(4);
+};
+
 /**
  * Function to start the game based on the selected grid size.
  * @param {number} gridSize - The size of the grid (4x4, 6x6, etc.).
