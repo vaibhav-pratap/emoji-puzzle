@@ -1,3 +1,4 @@
+// Set of emojis for the game
 let emojiSet = [
     '😄', '🐱', '🍎', '🚗', '⚽', '🎁', '🍕', '🐶', '🌸', '🍉', '🎯', '⚡',
     '🐨', '🎮', '📱', '🚀', '🐼', '🎃', '🍔', '🍟', '🦄', '🐍', '🎲', '🍰',
@@ -8,91 +9,118 @@ let emojiSet = [
     '🍿', '🍕', '🍔', '🍟', '🍝', '🍛', '🍱', '🥡', '🥟', '🍚', '🍜', '🍢'
 ];
 
+// DOM elements for game board, score, and win status
 let gameBoard = document.getElementById('gameBoard');
 let scoreDisplay = document.getElementById('score');
-let score = 0; // Initialize score
-let firstTile = null;
-let secondTile = null;
-let matchedTiles = 0;
-let totalTiles = 0;
-let isClickable = true;
+let winStatus = document.getElementById('winStatus');
 
-// Function to start the game with dynamic grid size
+// Game state variables
+let score = 0; // Initialize score to 0
+let firstTile = null; // Track the first tile clicked
+let secondTile = null; // Track the second tile clicked
+let matchedTiles = 0; // Track the number of matched tiles
+let totalTiles = 0; // Total number of tiles for the current game
+let isClickable = true; // Control to prevent multiple clicks during tile flipping
+
+/**
+ * Function to start the game based on the selected grid size.
+ * @param {number} gridSize - The size of the grid (4x4, 6x6, etc.).
+ */
 function startGame(gridSize) {
-    resetGame(); // Reset the game state
-    totalTiles = gridSize * gridSize;
+    resetGame(); // Reset the game state and board
+    totalTiles = gridSize * gridSize; // Calculate total tiles based on grid size
 
-    // Adjust the grid based on grid size
+    // Adjust the grid layout based on the selected size
     gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
 
-    // Select the correct number of emojis and shuffle them
+    // Shuffle the selected number of emojis for the game
     let emojis = shuffle([...emojiSet.slice(0, totalTiles / 2), ...emojiSet.slice(0, totalTiles / 2)]);
 
-    // Generate the game board
+    // Create and display the game tiles
     emojis.forEach(emoji => {
         let tile = document.createElement('div');
         tile.classList.add('tile');
-        tile.dataset.emoji = emoji;
-        tile.addEventListener('click', handleTileClick);
-        gameBoard.appendChild(tile);
+        tile.dataset.emoji = emoji; // Store the emoji in the dataset
+        tile.addEventListener('click', handleTileClick); // Add click event listener for tile
+        gameBoard.appendChild(tile); // Add tile to the game board
     });
 }
 
-// Reset the game board and state
+/**
+ * Function to reset the game board and state.
+ */
 function resetGame() {
-    gameBoard.innerHTML = ''; // Clear the current board
-    firstTile = null;
-    secondTile = null;
-    matchedTiles = 0;
+    gameBoard.innerHTML = ''; // Clear the current game board
+    firstTile = null; // Reset the first tile
+    secondTile = null; // Reset the second tile
+    matchedTiles = 0; // Reset the matched tiles count
     score = 0; // Reset the score
-    scoreDisplay.textContent = score;
-    document.getElementById('status').textContent = ''; // Clear the status message
+    scoreDisplay.textContent = score; // Display the updated score
+    winStatus.textContent = ''; // Clear the win status message
 }
 
+/**
+ * Function to handle tile clicks, flipping tiles and checking for matches.
+ */
 function handleTileClick() {
-    if (!isClickable || this.classList.contains('flipped') || firstTile === this) return; // Ignore if not clickable or already flipped
+    // Prevent tile flipping if tiles are in the process of flipping back
+    if (!isClickable || this.classList.contains('flipped') || firstTile === this) return;
 
+    // Flip the clicked tile
     this.classList.add('flipped');
 
+    // Check if this is the first or second tile clicked
     if (!firstTile) {
         firstTile = this; // First tile clicked
     } else {
         secondTile = this; // Second tile clicked
 
+        // Check if the emojis of both tiles match
         if (firstTile.dataset.emoji === secondTile.dataset.emoji) {
-            matchedTiles += 2;
-            score += 10; // Add points for a match
-            scoreDisplay.textContent = score;
-            resetTiles(); // Correct match
-            checkWin();
+            matchedTiles += 2; // Increment matched tiles count
+            score += 10; // Increase score for a match
+            scoreDisplay.textContent = score; // Update the displayed score
+            resetTiles(); // Reset firstTile and secondTile variables
+            checkWin(); // Check if all tiles are matched and the player has won
         } else {
-            isClickable = false; // Disable clicking while hiding tiles
+            // If the tiles don't match, hide them after a brief delay
+            isClickable = false; // Disable further clicks until tiles are hidden
             setTimeout(() => {
                 firstTile.classList.remove('flipped');
                 secondTile.classList.remove('flipped');
-                resetTiles(); // No match, hide both
+                resetTiles(); // Reset firstTile and secondTile variables
                 isClickable = true; // Re-enable clicking
-            }, 1000);
+            }, 1000); // Delay for tile hiding
         }
     }
 }
 
+/**
+ * Function to reset the selected tiles (firstTile and secondTile) after checking for a match.
+ */
 function resetTiles() {
-    firstTile = null;
-    secondTile = null;
+    firstTile = null; // Reset the first tile
+    secondTile = null; // Reset the second tile
 }
 
+/**
+ * Function to check if the player has matched all the tiles and won the game.
+ */
 function checkWin() {
     if (matchedTiles === totalTiles) {
-        document.getElementById('status').textContent = 'You Win!';
+        winStatus.textContent = 'You Win!'; // Display win message in floating bar
     }
 }
 
-// Shuffle function for randomizing the emojis
+/**
+ * Function to shuffle an array of emojis.
+ * @param {Array} array - The array of emojis to shuffle.
+ * @returns {Array} - The shuffled array.
+ */
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
-    return array;
+    return array; // Return the shuffled array
 }

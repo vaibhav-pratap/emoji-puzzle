@@ -4,6 +4,7 @@ body {
     color: #ffffff;
     display: flex;
     height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Smoother font */
 }
 
 /* Darker Floating Bar */
@@ -17,12 +18,17 @@ body {
     background-color: #0a0a23; /* Darker shade for floating bar */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between; /* Ensure proper spacing for elements */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Shadow for better separation */
 }
 
 #floatingBar h2 {
     color: #4169e1; /* Royal Blue for Title */
+}
+
+#floatingBar .difficulty-buttons {
+    width: 100%; /* Ensure buttons take up full width */
 }
 
 #floatingBar button {
@@ -48,7 +54,7 @@ body {
 }
 
 .score-display i {
-    font-size: 24px;
+    font-size: 30px;
     margin-left: 10px;
 }
 
@@ -64,7 +70,7 @@ body {
 
 #gameBoard {
     display: grid;
-    gap: 5px; /* Reduce the gap between boxes */
+    gap: 7px; /* Adjusted gap between boxes */
     max-width: 80vmin; /* Fit the grid within 80% of the smaller dimension */
     max-height: 80vmin;
     width: 100%;
@@ -104,11 +110,28 @@ body {
 }
 
 .tile:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Add hover effect */
 }
 
-/* Center the status text */
-#status {
+/* Center the win status text */
+#winStatus {
     font-size: 18px;
+    color: #fff;
     text-align: center;
+}
+
+/* Responsiveness for mobile screens */
+@media (max-width: 768px) {
+    #floatingBar {
+        width: 180px; /* Reduce width for smaller screens */
+    }
+
+    #gameBoard {
+        max-width: 100%; /* Ensure the game board fits on smaller screens */
+        max-height: 100%;
+    }
+    
+    .game-container {
+        margin-left: 200px; /* Adjust for smaller floating bar width */
+    }
 }

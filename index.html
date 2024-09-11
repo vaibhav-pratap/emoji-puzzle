@@ -13,23 +13,25 @@
 <body class="bg-dark text-light">
     <!-- Floating bar on the left side -->
     <div id="floatingBar" class="floating-bar bg-primary">
-        <h2 class="text-light mb-4">Difficulty Levels</h2>
-        <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(4)">4x4 - Easy</button>
-        <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(6)">6x6 - Medium</button>
-        <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(8)">8x8 - Hard</button>
-        <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(10)">10x10 - Expert</button>
-
-        <!-- Score Display -->
-        <div class="mt-5 score-display">
+        <!-- Score and Status Display in the center -->
+        <div class="score-display text-center">
             <h4 class="text-light">Score: <span id="score">0</span></h4>
             <i class="fas fa-star text-warning"></i>
+            <h5 class="text-light mt-3" id="winStatus"></h5> <!-- Win status -->
+        </div>
+
+        <!-- Buttons aligned at the bottom -->
+        <div class="difficulty-buttons mt-auto">
+            <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(4)">4x4 - Easy</button>
+            <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(6)">6x6 - Medium</button>
+            <button class="btn btn-outline-light mb-2 w-100" onclick="startGame(8)">8x8 - Hard</button>
+            <button class="btn btn-outline-light w-100" onclick="startGame(10)">10x10 - Expert</button>
         </div>
     </div>
 
     <!-- Game Board on the right side -->
     <div class="game-container">
         <div id="gameBoard" class="d-grid gap-1"></div>
-        <p id="status" class="mt-4 text-light"></p>
     </div>
 
     <!-- Bootstrap JS and Popper.js -->
